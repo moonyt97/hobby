@@ -11,7 +11,7 @@
 	rel="stylesheet"
 	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 	crossorigin="anonymous">
-<title>hobbyRegister</title>
+<title>HobbyUpdateForm</title>
 </head>
 <body>
 	<!-- Header -->
@@ -37,9 +37,9 @@
 	<!-- center -->
 	<center class="mt-5">
 		<div class="container">
-			<h4 class="mb-4">동호회 등록</h4>
-			<form action="hobbyRegister.do" method="post"
-				enctype="multipart/form-data">
+			<h4 class="mb-4">동호회 수정</h4>
+			<form action="/HobbyUpdate.do" method="post"
+				enctype="multipart/form-data" name="updateForm">
 				<div class="row row-cols-1">
 					<div class="col-sm justify-content-center mt-2">
 						<div>
@@ -47,10 +47,7 @@
 						</div>
 						<div class="image-container">
 							<img style="width: 415px; margin-right: 50px" id="preview-image"
-								src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image">
-							<input style="display: block; width: 415px; margin-right: 50px;"
-								type="file" name="hobbyImg" class="form-control"
-								id="input-image">
+								src="${bean.hobbyImg}" name="img"> 
 						</div>
 					</div>
 					<div class="col-sm justify-content-center mt-2">
@@ -61,7 +58,8 @@
 							<div class="col-auto">
 								<input type="text" id="inputTitle" name="hobbyTitle"
 									class="form-control" aria-describedby="passwordHelpInline"
-									required>
+									required value="${bean.hobbyTitle }"
+									placeholder=${bean.hobbyTitle }>
 							</div>
 						</div>
 						<div class="row g-3  align-items-center mt-2">
@@ -70,8 +68,7 @@
 							</div>
 							<div class="col-auto">
 								<select class="form-select" name="hobbyLo" id="autoSizingSelect">
-									<option selected value="">지역선택</option>
-									<option value="전체">전체</option>
+									<option selected value="${bean.hobbyLo }">${bean.hobbyLo}</option>
 									<option value="서울">서울</option>
 									<option value="대전">대전</option>
 									<option value="부산">부산</option>
@@ -86,7 +83,7 @@
 							<div class="col-auto">
 								<input type="number" id="inputCount" name="hobbyCount"
 									class="form-control" aria-describedby="passwordHelpInline"
-									required>
+									required value="${bean.hobbyCount }">
 							</div>
 						</div>
 						<div class="row g-3 align-items-center mt-2">
@@ -95,10 +92,11 @@
 							</div>
 							<div class="col-auto">
 								<textarea class="form-control" name="hobbyContent" rows="8"
-									cols="50"></textarea>
+									cols="50">${bean.hobbyContent}</textarea>
 							</div>
 						</div>
-						<input type="submit" value="동호회 등록📃"
+						<input type="hidden" value="${bean.hobbyNo }" name="hobbyNo">
+						<input type="submit" value="수정하기📃"
 							class="mt-4 btn btn-outline-primary" name="joinBtn" />
 					</div>
 				</div>

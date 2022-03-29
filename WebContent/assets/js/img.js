@@ -1,6 +1,8 @@
 /**
  * 
  */
+
+
 function readImage(input) {
 	    // 인풋 태그에 파일이 있는 경우
 	    if(input.files && input.files[0]) {
@@ -23,3 +25,20 @@ function readImage(input) {
 	    readImage(e.target)
 	}
 	)
+	
+function updateImgForm(){
+		window.open("/hobby/hobbyImg.jsp","","width=500,height=1000");
+	}
+	
+function imgok(){
+	const inputImage = document.getElementById("input-image");
+	const previewImage = document.getElementById("preview-image");
+	
+	const imgsrc = inputImage.value;
+	
+	console.log(imgsrc)
+	
+	opener.updateForm.img.src=imgsrc;
+	
+	self.close();
+}

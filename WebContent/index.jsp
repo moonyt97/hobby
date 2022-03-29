@@ -51,9 +51,8 @@
 			</c:if>
 			<c:if test="${loginMember!=null }">
 			<h5>${loginMember }님 환영합니다, 여러가지 취미를 즐겨보세요!</h5>
-			</c:if>
-			
 			<a href="/Hobby.do" class="btn mt-2 btn-outline-primary">취미 찾기🔍</a>
+			</c:if>
 			
 			<div class="mt-5">
 				<div class="slide1"><img alt="" src="assets/img/tennis.jpg"></div>

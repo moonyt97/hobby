@@ -24,32 +24,12 @@
 			<form action="/Hobby.do" method="get"
 				class="row gy-2 gx-3 justify-content-center align-items-center">
 				<div class="col-auto">
-					<label class="visually-hidden" for="autoSizingSelect">Preference</label>
-					<select class="form-select" name="hobbyLo" id="autoSizingSelect">
-						<option selected value="0">지역선택</option>
-						<option value="0">전체선택</option>
-						<option value="서울">서울</option>
-						<option value="대전">대전</option>
-						<option value="부산">부산</option>
-					</select>
-				</div>
-				<div class="col-auto">
-					<label class="visually-hidden" for="autoSizingInput">Name</label> <input
-						type="text" class="form-control" name="keyword"
-						id="autoSizingInput" placeholder="검색어">
-				</div>
-				<div class="col-auto">
-					<input type="submit" class="btn btn-outline-primary"
-						value="동호회찾기🔍" />
-					<c:if test="${loginMember!=null }">
-						<input type="button" class="btn btn-outline-primary"
-							onClick="location.href='/hobby/hobbyRegister.jsp'" value="동호회등록✏" />
-					</c:if>
+					<h4>나의 신청 목록</h4>
 				</div>
 			</form>
 
 			<div class="row row-cols-1 mt-3">
-				<c:forEach var="hobby" items="${beans }">
+				<c:forEach var="hobby" items="${lists }">
 					<div class="mt-3 col-sm">
 						<div class="card" style="width: 18rem;">
 							<img src="${hobby.hobbyImg }" height="150" class="card-img-top">

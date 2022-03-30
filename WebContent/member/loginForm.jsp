@@ -15,18 +15,7 @@
 </head>
 <body>
 	<!-- Header -->
-	<header>
-	<div class="container d-flex justify-content-between mt-2">
-		<h3 class="p-2">
-			<a href="/" style="text-decoration: none; color: black">What's
-				Your Hobby?!</a>
-		</h3>
-		<div class="p-2">
-			<button type="button" class="btn btn-primary">로그인</button>
-			<a class="btn btn-outline-primary" href="joinform.jsp">회원가입</a>
-		</div>
-	</div>
-	</header>
+	<jsp:include page="/top.jsp"/>
 	<!-- center -->
 	<center class="mt-5">
 		<div class="container">

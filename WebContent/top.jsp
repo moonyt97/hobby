@@ -14,28 +14,39 @@
 <title>Main</title>
 </head>
 <body>
-	<!-- Header  -->
-	<jsp:include page="top.jsp"/>
-	
-	<!-- center -->
-	<center class="mt-5">
-		<div class="container">
+	<c:if test="${joinResult==1 }">
+		<script type="text/javascript">
+			alert("아이디 중복체크를 해주세요")
+			history.go(-1)
+		</script>
+	</c:if>
+	<c:if test="${loginResult==0 }">
+		<script type="text/javascript">
+			alert("아이디와 비밀번호를 확안해주세요")
+			history.go(-1)
+		</script>
+	</c:if>
+	<!-- Header -->
+	<header>
+	<div class="container d-flex justify-content-between mt-2">
+		<h3 class="p-2">
+			<a href="/" style="text-decoration: none; color: black">What's
+				Your Hobby?!</a>
+		</h3>
+		<div class="p-2">
+			
 			<c:if test="${loginMember==null }">
-			<h5>로그인 후 다양한 취미를 즐겨 보세요!</h5>
+			<a href="member/loginForm.jsp" class="btn btn-outline-primary">로그인</a>
+			<a href="member/joinform.jsp" class="btn btn-outline-primary">회원가입</a>
 			</c:if>
 			<c:if test="${loginMember!=null }">
-			<h5>${loginMember }님 환영합니다, 여러가지 취미를 즐겨보세요!</h5>
-			<a href="/Hobby.do" class="btn mt-2 btn-outline-primary">취미 찾기🔍</a>
+			<a href="Logout.do" class="btn btn-outline-primary">로그아웃</a>
+			<a href="Profile.do" class="btn btn-outline-primary" >${loginMember }</a>
+			<a href="ParticipateList.do" class="btn btn-outline-primary">신청내역</a>
 			</c:if>
-			
-			<div class="mt-5">
-				<div class="slide1"><img alt="" src="assets/img/tennis.jpg"></div>
-				<div class=" slide1"><img alt="" width="400" src="assets/img/basketball.jpg"></div>
-				<div class=" slide1"><img alt="" width="400" src="assets/img/movie.jpg"></div>
-				<div class=" slide1"><img alt="" width="400" src="assets/img/guitar.jpg"></div>
-			</div>
 		</div>
-	</center>
+	</div>
+	</header>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"

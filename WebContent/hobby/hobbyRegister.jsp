@@ -15,25 +15,7 @@
 </head>
 <body>
 	<!-- Header -->
-	<header>
-	<div class="container d-flex justify-content-between mt-2">
-		<h3 class="p-2">
-			<a href="/" style="text-decoration: none; color: black">What's
-				Your Hobby?!</a>
-		</h3>
-		<div class="p-2">
-
-			<c:if test="${loginMember==null }">
-				<a href="member/loginForm.jsp" class="btn btn-outline-primary">로그인</a>
-				<a href="member/joinform.jsp" class="btn btn-outline-primary">회원가입</a>
-			</c:if>
-			<c:if test="${loginMember!=null }">
-				<a href="/Logout.do" class="btn btn-outline-primary">로그아웃</a>
-				<a href="/Profile.do" class="btn btn-outline-primary">${loginMember }</a>
-			</c:if>
-		</div>
-	</div>
-	</header>
+	<jsp:include page="/top.jsp" />
 	<!-- center -->
 	<center class="mt-5">
 		<div class="container">

@@ -49,8 +49,10 @@ public class HobbyDAO {
 		}
 	}
 
+	
 	public ArrayList<HobbyBean> getAllHobby(int startRow, int endRow) {
 		ArrayList<HobbyBean> beans = new ArrayList<>();
+		ParticipateDAO pdao = new ParticipateDAO();
 		getCon();
 		try {
 			String sql = "SELECT * FROM (SELECT A.*, ROWNUM RNUM FROM(SELECT * FROM TBL_HOBBY ORDER BY HOBBY_NO DESC)A) WHERE RNUM >= ? AND RNUM<=?";
@@ -69,7 +71,8 @@ public class HobbyDAO {
 				bean.setHobbyDate(rs.getDate(6));
 				bean.setMemberID(rs.getString(7));
 				bean.setHobbyCount(rs.getInt(8));
-
+				bean.setCurrentCount(pdao.participateCount(rs.getInt(1)));
+				
 				beans.add(bean);
 			}
 			con.close();
@@ -82,6 +85,7 @@ public class HobbyDAO {
 
 	public ArrayList<HobbyBean> getLocationHobby(String hobbyLo, int startRow, int endRow) {
 		ArrayList<HobbyBean> beans = new ArrayList<>();
+		ParticipateDAO pdao = new ParticipateDAO();
 		getCon();
 		try {
 			String sql = "SELECT * FROM (SELECT A.*, ROWNUM RNUM FROM (SELECT * FROM TBL_HOBBY WHERE HOBBY_LO=? ORDER BY HOBBY_NO DESC)A) WHERE RNUM >=? AND RNUM<=?";
@@ -101,7 +105,8 @@ public class HobbyDAO {
 				bean.setHobbyDate(rs.getDate(6));
 				bean.setMemberID(rs.getString(7));
 				bean.setHobbyCount(rs.getInt(8));
-
+				bean.setCurrentCount(pdao.participateCount(rs.getInt(1)));
+				
 				beans.add(bean);
 			}
 			con.close();
@@ -114,6 +119,7 @@ public class HobbyDAO {
 
 	public ArrayList<HobbyBean> getKeywordHobby(String keyword, int startRow, int endRow) {
 		ArrayList<HobbyBean> beans = new ArrayList<>();
+		ParticipateDAO pdao = new ParticipateDAO();
 		getCon();
 		try {
 			String sql = "SELECT * FROM (SELECT A.*, ROWNUM RNUM FROM (SELECT * FROM TBL_HOBBY WHERE HOBBY_TITLE LIKE ? OR HOBBY_CONTENT LIKE ? ORDER BY HOBBY_NO DESC)A) WHERE RNUM >=? AND RNUM<=?";
@@ -134,7 +140,8 @@ public class HobbyDAO {
 				bean.setHobbyDate(rs.getDate(6));
 				bean.setMemberID(rs.getString(7));
 				bean.setHobbyCount(rs.getInt(8));
-
+				bean.setCurrentCount(pdao.participateCount(rs.getInt(1)));
+				
 				beans.add(bean);
 			}
 			con.close();
@@ -146,6 +153,7 @@ public class HobbyDAO {
 
 	public ArrayList<HobbyBean> getKeywordLoHobby(String hobbyLo, String keyword, int startRow, int endRow) {
 		ArrayList<HobbyBean> beans = new ArrayList<>();
+		ParticipateDAO pdao = new ParticipateDAO();
 		getCon();
 		try {
 			String sql = "SELECT * FROM (SELECT A.*, ROWNUM RNUM FROM (SELECT * FROM TBL_HOBBY WHERE HOBBY_LO=? AND (HOBBY_TITLE LIKE ? OR HOBBY_CONTENT LIKE ?) ORDER BY HOBBY_NO DESC)A)"
@@ -168,7 +176,8 @@ public class HobbyDAO {
 				bean.setHobbyDate(rs.getDate(6));
 				bean.setMemberID(rs.getString(7));
 				bean.setHobbyCount(rs.getInt(8));
-
+				bean.setCurrentCount(pdao.participateCount(rs.getInt(1)));
+				
 				beans.add(bean);
 			}
 			con.close();
@@ -344,5 +353,67 @@ public class HobbyDAO {
 		
 		
 	}
+
+	public ArrayList<HobbyBean> participateList(String memberID) {
+		
+		getCon();
+		ArrayList<HobbyBean>lists = new ArrayList<>();
+		ParticipateDAO pdao = new ParticipateDAO();
+		try {
+			String sql = "SELECT * FROM TBL_HOBBY WHERE HOBBY_NO IN (SELECT HOBBY_NO FROM TBL_PARTICIPATE WHERE MEMBER_ID=?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberID);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				HobbyBean bean = new HobbyBean();
+				bean.setHobbyNo(rs.getInt(1));
+				bean.setHobbyTitle(rs.getString(2));
+				bean.setHobbyLo(rs.getString(3));
+				bean.setHobbyContent(rs.getString(4));
+				bean.setHobbyImg(rs.getString(5));
+				bean.setHobbyDate(rs.getDate(6));
+				bean.setMemberID(rs.getString(7));
+				bean.setHobbyCount(rs.getInt(8));
+				bean.setCurrentCount(pdao.participateCount(rs.getInt(1)));
+				
+				lists.add(bean);
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+			
+		return lists;
+	}
+
+	public ArrayList<MemberBean> getParticipateMember(int hobbyNo) {
+		getCon();
+		ArrayList<MemberBean>mlist = new ArrayList<>();
+		
+		try {
+			String sql = "SELECT * FROM TBL_MEMBER WHERE MEMBER_ID IN (SELECT MEMBER_ID FROM TBL_PARTICIPATE WHERE HOBBY_NO =?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, hobbyNo);
+			
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				MemberBean bean = new MemberBean();
+				bean.setMemberID(rs.getString(1));
+				bean.setMemberPhone(rs.getString(3));
+				bean.setMemberName(rs.getString(4));
+				mlist.add(bean);
+			}
+			con.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return mlist;
+	}
+
 
 }

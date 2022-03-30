@@ -14,6 +14,7 @@ import org.eclipse.jdt.internal.compiler.parser.RecoveredRequiresStatement;
 
 import model.HobbyBean;
 import model.HobbyDAO;
+import model.ParticipateDAO;
 
 /**
  * Servlet implementation class Hobby
@@ -73,6 +74,9 @@ public class Hobby extends HttpServlet {
 		if (beans.size() == 0) {
 			request.setAttribute("result", result);
 		}
+		
+		
+		
 		request.setAttribute("beans", beans);
 		request.setAttribute("pageSize", pageSize);
 		request.setAttribute("count", count);

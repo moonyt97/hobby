@@ -11,6 +11,7 @@ public class HobbyBean {
 	private Date hobbyDate;
 	private String memberID;
 	private int hobbyCount;
+	private int currentCount;
 	public int getHobbyNo() {
 		return hobbyNo;
 	}
@@ -59,12 +60,19 @@ public class HobbyBean {
 	public void setHobbyCount(int hobbyCount) {
 		this.hobbyCount = hobbyCount;
 	}
+	public int getCurrentCount() {
+		return currentCount;
+	}
+	public void setCurrentCount(int currentCount) {
+		this.currentCount = currentCount;
+	}
 	@Override
 	public String toString() {
 		return "HobbyBean [hobbyNo=" + hobbyNo + ", hobbyTitle=" + hobbyTitle + ", hobbyLo=" + hobbyLo
 				+ ", hobbyContent=" + hobbyContent + ", hobbyImg=" + hobbyImg + ", hobbyDate=" + hobbyDate
-				+ ", memberID=" + memberID + ", hobbyCount=" + hobbyCount + "]";
+				+ ", memberID=" + memberID + ", hobbyCount=" + hobbyCount + ", currentCount=" + currentCount + "]";
 	}
 	
+
 	
 }

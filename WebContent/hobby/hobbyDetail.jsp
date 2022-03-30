@@ -6,34 +6,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link
+<!-- <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-	crossorigin="anonymous">
+	crossorigin="anonymous"> -->
+
 <title>HobbyDetail</title>
 </head>
 <body>
 	<!-- Header -->
-	<header>
-	<div class="container d-flex justify-content-between mt-2">
-		<h3 class="p-2">
-			<a href="/" style="text-decoration: none; color: black">What's
-				Your Hobby?!</a>
-		</h3>
-		<div class="p-2">
-
-			<c:if test="${loginMember==null }">
-				<a href="member/loginForm.jsp" class="btn btn-outline-primary">로그인</a>
-				<a href="member/joinform.jsp" class="btn btn-outline-primary">회원가입</a>
-			</c:if>
-			<c:if test="${loginMember!=null }">
-				<a href="/Logout.do" class="btn btn-outline-primary">로그아웃</a>
-				<a href="/Profile.do" class="btn btn-outline-primary">${loginMember }</a>
-			</c:if>
-		</div>
-	</div>
-	</header>
+	<jsp:include page="/top.jsp" />
 	<!-- center -->
 	<center class="mt-5">
 		<div class="container">
@@ -46,11 +29,13 @@
 						</div>
 						<div class="image-container">
 							<img style="width: 415px; margin-right: 50px" id="preview-image"
-								src="${bean.hobbyImg }"> 
-								<c:if test="${loginMember==bean.memberID }">
+								src="${bean.hobbyImg }">
+							<c:if test="${loginMember==bean.memberID }">
 								<input type="button"
-								style="display: block; width: 415px; margin-right: 50px;"
-								class="btn btn-outline-primary" onclick="location.href='HobbyUpdateImg.do?hobbyNo=${bean.hobbyNo}'" value="사진수정" />
+									style="display: block; width: 415px; margin-right: 50px;"
+									class="btn btn-outline-primary"
+									onclick="location.href='HobbyUpdateImg.do?hobbyNo=${bean.hobbyNo}'"
+									value="사진수정" />
 							</c:if>
 						</div>
 					</div>
@@ -81,9 +66,8 @@
 								<label for="inputCount" class="col-form-label">모집인원</label>
 							</div>
 							<div class="col-auto">
-								<input type="number" id="inputCount" name="hobbyCount"
-									class="form-control" aria-describedby="passwordHelpInline"
-									value="${bean.hobbyCount }" readonly>
+								<span class="form-control">${participateCount}/${bean.hobbyCount }
+								</span>
 							</div>
 						</div>
 						<div class="row g-3 align-items-center mt-2">
@@ -96,26 +80,51 @@
 							</div>
 						</div>
 						<c:if test="${loginMember == bean.memberID }">
-							<input type="button" class="btn btn-outline-primary mt-4"
-								onClick="location.href='HobbyUpdateForm.do?hobbyNo=${bean.hobbyNo}'"
-								value="동호회수정✏" />
 								<input type="button" class="btn btn-outline-primary mt-4"
-								onClick="location.href='HobbyDelete.do?hobbyNo=${bean.hobbyNo}'"
-								value="동호회삭제🗑" />
+									onClick="location.href='HobbyUpdateForm.do?hobbyNo=${bean.hobbyNo}'"
+									value="동호회수정✏" /> <input type="button"
+									class="btn btn-outline-primary mt-4"
+									onClick="location.href='HobbyDelete.do?hobbyNo=${bean.hobbyNo}'"
+									value="동호회삭제🗑" />
+								<div class="btn-group">
+									<button type="button" class="btn btn-outline-primary mt-4 dropdown-toggle"
+										data-bs-toggle="dropdown" aria-expanded="false">
+										모집인원보기</button>
+									<ul class="dropdown-menu">
+										<c:forEach var="member" items="${mlist }">
+										<li><a class="dropdown-item" href="#">${member.memberID }</a></li>
+										</c:forEach>
+									</ul>
+								</div>
 						</c:if>
 						<c:if test="${loginMember != bean.memberID }">
-							<input type="submit" value="모집신청📝"
-								class="mt-4 btn btn-outline-primary" name="joinBtn" />
+							<c:choose>
+								<c:when test="${participateCount>=bean.hobbyCount}">
+									<input type="submit" value="모집종료🙏"
+										class="mt-4 btn btn-primary" name="joinBtn" />
+								</c:when>
+								<c:when test="${isParticipate==false }">
+									<input type="submit" value="모집신청📝"
+										onClick="location.href='/Participate.do?hobbyNo=${bean.hobbyNo}'"
+										class="mt-4 btn btn-outline-primary" name="joinBtn" />
+								</c:when>
+								<c:when test="${isParticipate==true}">
+									<input type="submit" value="신청취소✖"
+										onClick="location.href='/ParticipateDelete.do?hobbyNo=${bean.hobbyNo}'"
+										class="mt-4 btn btn-outline-primary" name="joinBtn" />
+								</c:when>
+
+							</c:choose>
 						</c:if>
 					</div>
 				</div>
 			</form>
 		</div>
 	</center>
-	<script
+	<!-- <script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous"></script> -->
 	<script type="text/javascript" src="/assets/js/img.js"></script>
 </body>
 </html>
